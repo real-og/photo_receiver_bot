@@ -30,7 +30,7 @@ def upload_all_files(dir_path_global):
     move_files('buffer_files/documents', 'buffer_files')
     client.mkdir('Saw_bot')
     client.mkdir(f'Saw_bot/{dir_path_global}')
-    client.upload_async(f'{GLOBAL_FOLDER}/{dir_path_global}', 'buffer_files')
+    client.upload_sync(f'{GLOBAL_FOLDER}/{dir_path_global}', 'buffer_files')
     try:
         shutil.rmtree('buffer_files')
     except:
