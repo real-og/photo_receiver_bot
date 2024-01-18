@@ -9,3 +9,4 @@ config.py
 test.jpg
 test2.jpg
 .DS_Store
+buffer_files
