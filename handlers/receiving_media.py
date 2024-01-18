@@ -13,9 +13,9 @@ async def send_welcome(mes: types.Message, state: FSMContext):
     if mes.content_type in ['photo', 'document', 'video']:
         try:
             if mes.photo:
-                await mes.photo[-1].download(destination_file=f'buffer_files/{mes.message_id}* {datetime.now().strftime("%d-%m-%Y, %H:%M:%S")}.jpg')
+                await mes.photo[-1].download(destination_file=f'buffer_files/{mes.message_id}.jpg')
             elif mes.video:
-                await mes.video.download(destination_file=f'buffer_files/{mes.message_id}* {datetime.now().strftime("%d-%m-%Y, %H:%M:%S")}.mp4')
+                await mes.video.download(destination_file=f'buffer_files/{mes.message_id}.mp4')
             elif mes.document:
                 await mes.document.download(destination_dir=f'buffer_files/')
 
