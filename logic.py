@@ -1,5 +1,6 @@
 from webdav3.client import Client
 import os
+import shutil
 
 
 CLOUD_NAME = str(os.environ.get('CLOUD_NAME'))
@@ -15,24 +16,28 @@ data = {
 }
 client = Client(data)
 
+def move_files(source_folder, destination_folder):
+    files = os.listdir(source_folder)
+    for file_name in files:
+        
+        source_file = os.path.join(source_folder, file_name)
+        destination_file = os.path.join(destination_folder, file_name)
+
+        shutil.move(source_file, destination_file)
+
 
 def upload_all_files(dir_path_global):
+    move_files('buffer_files/documents', 'buffer_files')
     client.mkdir('Saw_bot')
     client.mkdir(f'Saw_bot/{dir_path_global}')
-    files_names = []
-
+    client.upload_async(f'{GLOBAL_FOLDER}/{dir_path_global}', 'buffer_files')
     try:
-        for file_name in os.listdir('buffer_files'):
-            files_names.append('buffer_files/' + file_name)
+        shutil.rmtree('buffer_files')
+    except:
+        pass
+    try:
+        os.mkdir('buffer_files')
+        os.mkdir('buffer_files/documents')
     except:
         pass
 
-    try:
-        for file_name in os.listdir('buffer_files/documents'):
-            files_names.append('buffer_files/documents/' + file_name)
-    except:
-        pass
-
-    for file_name in files_names:
-        old_name = file_name.split('/')[-1]
-        client.upload_async(f'{GLOBAL_FOLDER}/{dir_path_global}/{old_name}', file_name)
